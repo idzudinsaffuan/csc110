@@ -1,0 +1,46 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets (never commit these)
+.env
+.env.*
+*.pem
+*.key
+
+# Editor / IDE files
+.idea/
+*.swp
+*~
+# .vscode/ (uncomment if you don't want to share VS Code settings)
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+build/
+dist/
+
+# Node / JavaScript
+node_modules/
+npm-debug.log*
+.next/
+.cache/
+
+# Logs and temp files
+*.log
+*.tmp
+tmp/
+
+# Coverage reports
+.coverage
+htmlcov/
+coverage/
