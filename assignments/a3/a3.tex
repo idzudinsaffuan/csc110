@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+
+\title{CSC110 Fall 2026 Assignment 3: Number Theory and Cryptography}
+\author{TODO: FILL IN YOUR NAME HERE}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section*{Part 1: Proofs}
+
+\begin{enumerate}
+\item[1.] Statement to prove:
+$\forall a, b, k, m, n \in \mathbb{Z},~
+\big(n > 0 \land a \equiv b \pmod n \big) \Rightarrow
+a + kn \equiv b + mn \pmod n$
+
+\begin{proof}
+TODO: Write your proof here.
+\end{proof}
+
+\newpage
+
+\item[2.] Statement to prove:
+$\forall a, b, n \in \mathbb{Z},~
+\big(n > 0 \land \gcd(a, n) = 1 \land b \equiv a \pmod n \big) \Rightarrow
+\gcd(b, n) = 1$
+
+\begin{proof}
+TODO: Write your proof here.
+\end{proof}
+
+\newpage
+
+\item[3.] Statement to prove:
+Let $p$ and $q$ be distinct primes, let $n = pq$, and let $\varphi(n) = (p - 1)(q - 1)$.
+Let $e, d \in \mathbb{Z}^+$ and assume that $ed \equiv 1 \pmod{\varphi(n)}$.
+Prove that for all $x \in \mathbb{Z}$, if $\gcd(x, n) = 1$, then
+\[
+(x^e)^d \equiv x \pmod n.
+\]
+
+\begin{proof}
+TODO: Write your proof here.
+\end{proof}
+\end{enumerate}
+
+
+\newpage
+
+\section*{Part 2: Block-Based RSA}
+
+Complete this part in the provided \texttt{a3\_part2.py} starter file.
+Do \textbf{not} include your solutions in this file.
+
+\section*{Part 3: Digital Signatures}
+
+\subsection*{Part (a): Introduction}
+
+Complete this part in the provided \texttt{a3\_part3.py} starter file.
+Do \textbf{not} include your solutions in this file.
+
+\subsection*{Part (b): Generalizing the message digests}
+
+Complete most of this part in the provided \texttt{a3\_part3.py} starter file.
+Do \textbf{not} include your solutions in this file, \emph{except} for the following two questions:
+
+\begin{enumerate}
+
+\item[3b.]
+
+\begin{verbatim}
+# TODO: copy-and-paste your code for find_collision_len_times_sum here.
+# This will make it easier for both you and your TA to refer to your code in your
+# explanation below!
+
+def find_collision_len_times_sum(message: str) -> str:
+
+\end{verbatim}
+
+
+TODO: Explain (in English) your algorithm for \texttt{find\_collision\_len\_times\_sum} here.
+You may use the \texttt{verbatim} environment to include blocks of code in your explanation.
+
+\newpage
+
+\item[4b.]
+
+\begin{verbatim}
+# TODO: copy-and-paste your code for find_collision_ascii_to_int here.
+# This will make it easier for both you and your TA to refer to your code in your
+# explanation below!
+
+def find_collision_ascii_to_int(public_key: tuple[int, int], message: str) -> str:
+
+\end{verbatim}
+
+TODO: Explain (in English) your algorithm for \texttt{find\_collision\_ascii\_to\_int} here.
+You may use the \texttt{verbatim} environment to include blocks of code in your explanation.
+
+\end{enumerate}
+\end{document}
