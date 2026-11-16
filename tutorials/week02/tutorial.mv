@@ -1,0 +1,835 @@
+# Waterproof Tutorial (CSC110 Edition)
+
+Try to solve the exercises below by inspecting the examples. Not sure how to start? You can type **Ctrl + space** (Windows) or **Command + space** (Mac) to get a list of possible options, or type `Help.` in your proof (remove it before submitting).
+
+<hint title="📦 Import libraries (click to open/close)">
+```coq
+From Stdlib Require Import Rbase.
+From Stdlib Require Import Rfunctions.
+
+Require Import Waterproof.Waterproof.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
+Require Import Waterproof.Tactics.
+Require Import Waterproof.Libs.Analysis.SupAndInf.
+Require Import Waterproof.Automation.
+
+Waterproof Enable Automation RealsAndIntegers.
+
+
+Open Scope R_scope.
+Open Scope subset_scope.
+Set Default Goal Selector "!".
+
+Set Bullet Behavior "Waterproof Relaxed Subproofs".
+
+
+Notation "'max(' x , y )" := (Rmax x y)
+  (format "'max(' x ,  y ')'").
+Notation "'min(' x , y )" := (Rmin x y)
+  (format "'min(' x ,  y ')'").
+```
+</hint>
+
+## 1. We conclude that
+
+### Example
+```coq
+Lemma example_conclude :
+  0 = 0.
+Proof.
+Help. (* optional, ask for help, remove from final proof *)
+We conclude that 0 = 0.
+Qed.
+```
+
+> Use `We conclude that <goal>.` to state the goal once it follows from what is already known.
+
+### Try it yourself
+
+**Note**: Not sure how to continue? You can always write the sentence `Help.` in your proof to ask for help. Please remove the help sentence from your final proof. If the bar below is green, the proof has been accepted. If it is yellow, it is still being checked. If it is red, the proof is incomplete.
+```coq
+Lemma exercise_conclude :
+  3 = 3.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 2. We need to show that
+
+### Example
+```coq
+Lemma example_we_need_to_show_that :
+  2 = 2.
+Proof.
+We need to show that 2 = 2.
+We conclude that 2 = 2.
+Qed.
+```
+
+> This restates the current goal, without proving anything.
+
+### Try it yourself
+```coq
+Lemma exercise_we_need_to_show_that :
+  7 = 7.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 3. Proving "for every x, ...": take an arbitrary value
+
+To prove a statement holds for every element of a set, introduce a fixed but unspecified element and prove the statement for it, without assuming anything extra about it.
+
+### Example
+```coq
+Lemma example_take :
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    x + y = y + x.
+Proof.
+Take x ∈ ℝ.
+Take y ∈ ℝ.
+We conclude that x + y = y + x.
+Qed.
+```
+
+> Each variable in the statement needs its own `Take` line.
+
+### Try it yourself
+```coq
+Lemma exercise_take :
+  ∀ x ∈ ℝ,
+    x + 3 = 3 + x.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 4. Proving "there exists x such that ...": choose a value
+
+To prove an existence statement, provide one specific value and show it satisfies the required property.
+
+### Example
+```coq
+Lemma example_choose :
+  ∃ y ∈ ℝ,
+    y < 3.
+Proof.
+Choose y := 2.
+{ Indeed, y ∈ ℝ. } (* Note: there needs to be a space between '.' and '}' *)
+We conclude that y < 3.
+Qed.
+```
+
+> The `{ Indeed, y ∈ ℝ. }` line confirms the chosen value belongs to the required set.
+
+### Try it yourself
+```coq
+Lemma exercise_choose :
+  ∃ z ∈ ℝ,
+    z < 14.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 5. Proving "if P, then Q": make an assumption
+
+To prove a statement of the form "if P, then Q", assume P is true and show that Q follows.
+
+### Example
+```coq
+Lemma example_assumptions :
+  ∀ x ∈ ℤ,
+    x > 0 ⇒ x + 1 > 1.
+Proof.
+Take x ∈ ℤ.
+Assume that x > 0.
+We conclude that x + 1 > 1.
+Qed.
+```
+
+### Another example with explicit labels
+```coq
+Lemma example_assumptions_2 :
+  ∀ x ∈ ℤ,
+    x > 0 ⇒ x + 1 > 1.
+Proof.
+Take x ∈ ℤ.
+Assume that x > 0 as (i). (* The label here is optional *)
+By (i) we conclude that x + 1 > 1.
+Qed.
+```
+
+> Labelling an assumption with `as (i)` allows it to be referenced later using `By (i) ...`.
+
+### Try it yourself
+```coq
+Lemma exercise_assumptions :
+  ∀ a ∈ ℤ,
+    a ≥ 2 ⇒ a + 3 > 4.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 6. Proving "P and Q": prove two statements
+
+To prove a conjunction, prove each part separately.
+
+### Example
+```coq
+Lemma example_both_statements :
+  ∀ x ∈ ℝ, x^2 ≥ 0 ∧ | x | ≥ 0.
+Proof.
+Take x ∈ ℝ.
+We show both statements.
+- We need to show that x^2 ≥ 0.
+  We conclude that x^2 ≥ 0.
+- We need to show that | x | ≥ 0.
+  We conclude that | x | ≥ 0.
+Qed.
+```
+
+> Each `-` bullet is a complete, independent proof of one part.
+
+### Try it yourself
+```coq
+Lemma exercise_both_statements :
+  ∀ x ∈ ℝ, 0 * x = 0 ∧ x + 1 > x.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 7. Proving "P if and only if Q": show both directions
+
+A statement of the form "P if and only if Q" requires two separate proofs: "if P then Q" and "if Q then P".
+
+### Example
+```coq
+Lemma example_both_directions :
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    x < y ⇔ y > x.
+Proof.
+Take x ∈ ℝ.
+Take y ∈ ℝ.
+We show both directions.
+- We need to show that x < y ⇒ y > x.
+  Assume that x < y.
+  We conclude that y > x.
+- We need to show that y > x ⇒ x < y.
+  Assume that y > x.
+  We conclude that x < y.
+Qed.
+```
+
+> Each `-` bullet proves one direction independently, using the same assume-and-conclude pattern as Section 5.
+
+### Try it yourself
+```coq
+Lemma exercise_both_directions :
+  ∀ x ∈ ℝ, x > 1 ⇔ x - 1 > 0.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 8. Proving "P or Q": prove one of them
+
+To prove "P or Q", it is enough to prove just one of P or Q. Pick the one that is true and prove it.
+
+### Example
+```coq
+Lemma example_or :
+  ∀ x ∈ ℝ,
+    x > 5 ⇒ (x > 2 ∨ x < 0).
+Proof.
+Take x ∈ ℝ.
+Assume that x > 5.
+It suffices to show that x > 2.
+We conclude that x > 2.
+Qed.
+```
+
+> `It suffices to show that x > 2.` picks the side of the "or" to prove.
+
+### Try it yourself
+```coq
+Lemma exercise_or :
+  ∀ x ∈ ℝ,
+    x < -3 ⇒ (x > 10 ∨ x < 0).
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 9. Combining several of the above in one proof
+
+Statements that mix quantifiers and implications are handled by addressing each part in the order it appears.
+
+### Example
+```coq
+Lemma example_combine_quantifiers :
+  ∀ a ∈ ℝ, ∀ b ∈ ℝ,
+    b > 5 ⇒ ∃ c ∈ ℝ, c > b - a.
+Proof.
+Take a ∈ ℝ.
+Take b ∈ ℝ.
+Assume that b > 5.
+Choose c := b - a + 1.
+{ Indeed, c ∈ ℝ. }
+We conclude that c > b - a.
+Qed.
+```
+
+### Try it yourself
+```coq
+Lemma exercise_combine_quantifiers :
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    x > 3 ⇒ ∃ z ∈ ℝ, x < z - y.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 10. Expanding definitions
+
+Statements that use a custom definition, rather than a built-in operator, sometimes need that definition unfolded before it can be reasoned about directly.
+
+### Example
+
+Here is the definition of the square function, as an example.
+```coq
+Definition square (x : ℝ) := x^2.
+```
+<hint title="🔧 Technical details (click to open/close)">
+```coq
+Waterproof Register Expand "square";
+  for square;
+  as "Definition square".
+```
+</hint>
+
+By writing `Expand square.` you get suggestions on how to use the definition of _square_ in your proof.
+Alternatively, you can just write `Expand All.` and you get suggestions for all definitions that
+Waterproof knows about.
+
+After writing one of these, you can click on the button `replace` to replace the line
+`Expand square.` or `Expand All.` with one of the suggested statements.
+
+```coq
+Lemma example_expand :
+  ∀ x ∈ ℝ, square x ≥ 0.
+Proof.
+Take x ∈ ℝ.
+Expand square.
+  (* Remove the above line in your own code! *)
+Expand All.
+  (* Remove the above line in your own code! *)
+We need to show that x^2 ≥ 0.
+We conclude that x^2 ≥ 0.
+Qed.
+```
+
+> `Expand square.` reveals that `square x` means `x^2`, allowing the goal to be restated in terms already known to the automation.
+
+### Try it yourself
+```coq
+Lemma exercise_expand :
+  ∀ x ∈ ℝ, - (square x) ≤ 0.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 11. Using a fact that is an "and"
+
+If a hypothesis has the form "P and Q", it can be split into its two parts to be used separately.
+
+### Example
+```coq
+Lemma example_use_conjunction :
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    (x > 0 ∧ y > 0) ⇒ x + y > 0.
+Proof.
+Take x ∈ ℝ.
+Take y ∈ ℝ.
+Assume that x > 0 ∧ y > 0.
+It holds that x > 0.
+It holds that y > 0.
+We conclude that x + y > 0.
+Qed.
+```
+
+> `It holds that x > 0.` records one part of the "and" as a separate fact. `It holds that` is covered in more detail in a later section on "working forwards".
+
+### Try it yourself
+```coq
+Lemma exercise_use_conjunction :
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    (x > 1 ∧ y > 1) ⇒ x * y > 1.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 12. Using a fact that is existentially quantified
+
+If a hypothesis states that some value exists with a given property, that value can be named and its property used directly.
+
+### Example
+```coq
+Lemma example_use_there_exists :
+  ∀ x ∈ ℝ,
+    (∃ y ∈ ℝ, y > 10 ∧ y < x) ⇒
+      10 < x.
+Proof.
+Take x ∈ ℝ.
+Assume that ∃ y ∈ ℝ, y > 10 ∧ y < x.
+Obtain such a y.
+It holds that y > 10.
+It holds that y < x.
+We conclude that 10 < x.
+Qed.
+```
+
+### Another example
+```coq
+Lemma example_use_there_exists_2 :
+  ∀ x ∈ ℝ,
+    (∃ y ∈ ℝ, y > 14 ∧ y < x) ⇒
+      12 < x.
+Proof.
+Take x ∈ ℝ.
+Assume that ∃ y ∈ ℝ, y > 14 ∧ y < x as (i).
+Obtain y according to (i).
+It holds that y > 14.
+It holds that y < x.
+We conclude that 12 < x.
+Qed.
+```
+
+> `Obtain such a y.` (or `Obtain y according to (i).`) introduces the value named in the existence statement as a usable variable, with its stated properties attached.
+
+### Try it yourself
+```coq
+Lemma exercise_use_there_exists :
+  ∀ z ∈ ℝ,
+    (∃ x ∈ ℝ, x ≥ 5 ∧ x^2 < z) ⇒
+      25 < z.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 13. Using a fact that is an "or"
+
+If a hypothesis has the form "P or Q", we don't know which of the two is true, so the proof is split into cases: one assuming P, and one assuming Q. The goal must be proved in both cases.
+
+### Example
+```coq
+Lemma example_use_disjunction :
+  ∀ x ∈ ℝ,
+    (x = 2 ∨ x = 3) ⇒ x > 1.
+Proof.
+Take x ∈ ℝ.
+Assume that x = 2 ∨ x = 3 as (i).
+Because (i) either x = 2 or x = 3.
+- Case x = 2.
+  We conclude that x > 1.
+- Case x = 3.
+  We conclude that x > 1.
+Qed.
+```
+
+> `Because (i) either ... or ...` splits the "or" in hypothesis (i) into two cases. Each `-` bullet proves the goal under one of them.
+
+### Another example: splitting into cases without an "or" hypothesis
+
+You can also split into cases yourself, as long as the cases cover every possibility. This is useful when proving an "or" where which side is true depends on the situation.
+
+```coq
+Lemma example_cases :
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    max(x, y) = x ∨ max(x, y) = y.
+Proof.
+Take x ∈ ℝ.
+Take y ∈ ℝ.
+Either x < y or x ≥ y.
+- Case x < y.
+  It suffices to show that max(x, y) = y.
+  We conclude that max(x, y) = y.
+- Case x ≥ y.
+  It suffices to show that max(x, y) = x.
+  We conclude that max(x, y) = x.
+Qed.
+```
+
+> `Either ... or ...` states the two possibilities that cover every case. Each `-` bullet proves the goal under one of them.
+
+### Try it yourself
+```coq
+Lemma exercise_use_disjunction :
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    (x > y ∨ x = y) ⇒ x ≥ y.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+### Try it yourself (splitting into cases)
+```coq
+Lemma exercise_cases :
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    min(x, y) = x ∨ min(x, y) = y.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 14. Working forwards: "It holds that"
+
+New facts can be derived from what is already known, one step at a time, until the goal is reached.
+
+### Example
+```coq
+Lemma example_forwards :
+  ∀ x ∈ ℝ,
+    x > 7 ⇒ x > 2.
+Proof.
+Take x ∈ ℝ.
+Assume that x > 7.
+It holds that x > 3.
+We conclude that x > 2.
+Qed.
+```
+
+> To derive a fact from a specific named hypothesis or lemma, write `By (h) it holds that ...`.
+
+### Another example: using an assumed implication
+
+```coq
+Lemma example_forwards_implication :
+  ∀ x ∈ ℝ,
+    ((x > 0 ⇒ x + 1 > 1) ∧ x > 5) ⇒ x + 1 > 1.
+Proof.
+Take x ∈ ℝ.
+Assume that (x > 0 ⇒ x + 1 > 1) ∧ x > 5.
+It holds that x > 0 ⇒ x + 1 > 1 as (i).
+It holds that x > 5.
+It holds that x > 0.
+By (i) it holds that x + 1 > 1.
+We conclude that x + 1 > 1.
+Qed.
+```
+
+> This can be used to derive the conclusion of an implication if we have already established the hypothesis.
+
+### Try it yourself
+```coq
+Lemma exercise_forwards :
+  ∀ x ∈ ℝ,
+    x > 8 ⇒ x ≥ 3.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 15. Using a fact that is universally quantified
+
+If a hypothesis holds for every element of a set, it can be applied to one specific value of interest.
+
+### Example
+```coq
+Lemma example_use_for_all :
+  ∀ x ∈ ℝ,
+    (∀ ε ∈ ℝ, ε > 0 ⇒ x < ε) ⇒
+       x + 1 / 2 < 1.
+Proof.
+Take x ∈ ℝ.
+Assume that ∀ ε ∈ ℝ, ε > 0 ⇒ x < ε as (i).
+Use ε := 1 / 2 in (i).
+{ Indeed, 1 / 2 ∈ ℝ. }
+It holds that 1 / 2 > 0 ⇒ x < 1 / 2.
+It holds that 1 / 2 > 0.
+It holds that x < 1 / 2.
+We conclude that x + 1 / 2 < 1.
+Qed.
+```
+
+> `Use ε := 1 / 2 in (i).` applies hypothesis (i) to the specific value 1 / 2. Any remaining conditions from (i), such as `1 / 2 > 0`, still need to be justified before the resulting fact can be used.
+
+### Try it yourself
+```coq
+Lemma exercise_use_for_all:
+  ∀ x ∈ ℝ,
+    (∀ ε ∈ ℝ, ε > 0 ⇒ x < ε) ⇒
+       10 * x < 1.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 16. Working backwards: "It suffices to show that"
+
+If proving a simpler statement would automatically make the goal true, the goal can be replaced with that simpler statement.
+
+### Example
+```coq
+Lemma example_backwards :
+  ∀ x ∈ ℝ,
+    x > 3 ⇒ x + 2 > 4.
+Proof.
+Take x ∈ ℝ.
+Assume that x > 3.
+It suffices to show that x > 2.
+We conclude that x > 2.
+Qed.
+```
+
+### Try it yourself
+```coq
+Lemma exercise_backwards :
+  ∀ x ∈ ℝ,
+    x > 5 ⇒ x - 1 > 3.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 17. Chains of (in)equalities
+
+Several connected inequalities can be written as a single chain instead of separate steps.
+
+### Example
+```coq
+Lemma example_inequalities :
+  ∀ a ∈ ℝ, ∀ b ∈ ℝ, ∀ c ∈ ℝ,
+    (a < b ∧ b < c) ⇒ a < c.
+Proof.
+Take a ∈ ℝ.
+Take b ∈ ℝ.
+Take c ∈ ℝ.
+Assume that a < b ∧ b < c.
+It holds that a < b.
+It holds that b < c.
+We conclude that & a < b < c.
+Qed.
+```
+
+> The `&` chain is checked one link at a time (`a < b`, then `b < c`) before the overall relation (`a < c`) is accepted.
+
+### Try it yourself
+```coq
+Lemma exercise_inequalities:
+  ∀ x ∈ ℝ, ∀ y ∈ ℝ,
+    (x < y ∧ y < x + 5) ⇒ x < x + 5.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 18. Arguing by contradiction
+
+To prove a statement, assume it is false and show that this leads to a contradiction.
+
+### Example
+```coq
+Lemma example_contradiction :
+  ∀ x ∈ ℝ,
+    (∀ ε ∈ ℝ, ε > 0 ⇒ x > 1 - ε) ⇒
+      x ≥ 1.
+Proof.
+Take x ∈ ℝ.
+Assume that ∀ ε ∈ ℝ, ε > 0 ⇒ x > 1 - ε as (i).
+We need to show that x ≥ 1.
+We argue by contradiction.
+Assume that ¬ (x ≥ 1).
+It holds that (1 - x) > 0.
+By (i) it holds that x > 1 - (1 - x).
+It holds that x > x.
+Contradiction.
+Qed.
+```
+
+> `Contradiction.` finishes the proof once you have derived something impossible, like `x > x`.
+
+### Try it yourself
+```coq
+Lemma exercise_contradiction :
+  ∀ x ∈ ℝ,
+    (∀ ε ∈ ℝ, ε > 0 ⇒ x < ε)
+      ⇒ x ≤ 0.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## 19. Proof by induction
+
+To prove a statement for every natural number, show it holds for 0 (the base case), then show that if it holds for some number k, it also holds for k + 1 (the inductive step).
+
+<hint title="Notations setup (click to open/close)">
+Since this section works with natural numbers instead of real numbers, we first switch the default scope so that `<`, `≤`, `+`, etc. are read as operations on ℕ:
+```coq
+Close Scope R_scope.
+Open Scope nat_scope.
+```
+</hint>
+
+### Example
+```coq
+Lemma example_induction :
+  ∀ n : ℕ → ℕ, (∀ k ∈ ℕ, n(k) < n(k + 1)) ⇒
+    ∀ k ∈ ℕ, k ≤ n(k).
+Proof.
+Take n : ℕ → ℕ.
+Assume that ∀ k ∈ ℕ, n(k) < n(k + 1).
+We use induction on k.
+- We first show the base case 0 ≤ n(0).
+  We conclude that 0 ≤ n(0).
+- We now show the induction step.
+  Take k ∈ ℕ.
+  Assume that k ≤ n(k).
+  It holds that n(k) < n(k + 1).
+  It holds that n(k) + 1 ≤ n(k + 1).
+  We conclude that & k + 1 ≤ n(k) + 1 ≤ n(k + 1).
+Qed.
+```
+
+> The first `-` bullet is the base case. The second is the inductive step: `Take k ∈ ℕ.` introduces an arbitrary number, `Assume that k ≤ n(k).` is the induction hypothesis, and the rest of the proof shows the statement then holds for the next number. Waterproof writes k + 1 as `S(k)` inside the induction step.
+
+### Try it yourself
+```coq
+Lemma exercise_induction :
+  ∀ F : ℕ → ℕ, (∀ k ∈ ℕ, F(k + 1) = F(k)) ⇒
+    ∀ k ∈ ℕ, F(k) = F(0).
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```

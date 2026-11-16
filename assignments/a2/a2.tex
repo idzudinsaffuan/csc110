@@ -1,0 +1,204 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{CSC110 Fall 2026 Assignment 2}
+\author{Idzudin Saffuan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% TIP: In LaTeX, the underscore (_) is a special character, so if you want to use it
+% in normal text, you have to put a backslash in front of it. E.g., a2\_part2.py,
+% not a2_part2.py.
+
+\section*{Part 1: Proofs}
+
+\begin{enumerate}
+\item[1a.]
+Let $x \in \mathbb{Z}^+ $
+
+Take $y=x$ , hence $y \in \mathbb{Z}^+$
+
+\textcircled{1} $xy \implies x^2 \geq 0$
+
+\textcircled{2} $ y =x \implies x = x \implies y \geq x$
+
+
+
+\item[1b.]
+WTS: $\forall{y} \in D, \exists{x} \in D\ s.t \ xy \leq 0 \vee y < x $
+
+Let $ y \in \mathbb{Z}^+$
+
+\textcircled{1} Take $x = 2y$ , hence $ x \in \mathbb{Z}^+$
+
+\textcircled{2} $ y < x \implies y < 2y$
+
+\item[1c.]
+Suppose $D = \mathbb{Z}^-$
+
+Let $x \in \mathbb{Z}^-$
+
+\textcircled{1} Take $y = 2x$
+
+\textcircled{2} Hence, the statement $y \geq x \implies 2x \geq x$ is false.
+
+\item[1d.]
+Suppose $D = (0,1]$
+
+Let $x \in D$
+
+Take $y = 1$
+
+\textcircled{1} $xy \implies x > 0 $ since $y=1$ and $x \in (0,1]$
+
+\textcircled{2} Hence $\forall{x}, \ y \geq x$ since $0 < x \leq 1 = y$
+
+
+
+\item[2.]
+WTS: $a>1  \land  b>1 \implies (\exists{d}\in\mathbb{N},(\exists{k}\in\mathbb{Z},\ ab = kd))\land(d\neq1 \land d\neq ab)$
+
+Suppose $a>1$ and $b>1$
+
+\textcircled{1} Take $d = b$ where $(d\neq1 \land d\neq ab)$
+
+\textcircled{2} Take $k = a$
+
+\textcircled{3} Hence $ab = ab$
+
+
+\item[3.]
+Suppose $a \in \mathbb{Z}$
+
+Then by Quotient-Remainder Theorem,
+
+$a = 2q + r$ for some $q,r \in \mathbb{Z}$ and $0 \leq r \leq 1$
+
+$a^2 + a \implies (2q+r)^2 + 2q +r$
+
+$= 4q^2 +4qr + r^2 + 2q+r$
+
+$= 4q^2 +4qr + r(4q+1+r)$
+
+\underline{Case 1: $r=1$;}
+
+$4q^2 + 2q + (4q+1+1)$
+
+$=4q^2 + 6q +2$
+
+$= 2(2q^2 +3q +1)$
+
+\underline{Case 2: $r=0$;}
+
+$4q + 2q$
+
+$=2(2q^2+q)$
+
+For both of these cases, it is shown that $2 \ | \  a^2 +a$.
+
+
+
+
+\item[4a.]
+Suppose $S= \{0,1,2,3,4\}, \ \forall a_1, a_2, a_3, b_1, b_2, b_3 \in S, \forall r \in \mathbb{Z}, \mathit{AssessDiff}(a_1, a_2, a_3, b_1, b_2, b_3, r)$
+
+It is given that $r = r_1 +r_2 + r_3$
+
+Hence $r = |a_1-b_1| + |a_2 - b_2| + |a_3 - b_3|$
+
+Since $a_i, b_i \in S \ for \ i \in \{1,2,3\},$
+
+$|a_i - b_i| \geq 0$, since absolute values are always non-negative
+
+$max\{S\} = 4$, and $min\{s\} = 0$
+
+Hence absolute difference between any two elements in S is;
+
+$|4-0| = 4$
+
+Thus $r_i \leq 4$
+
+Combining these ranges gives:
+
+$0 \leq r_i \leq 4$
+
+
+
+
+\item[4b.]
+Suppose $S= \{0,1,2,3,4\}, \ \forall a_1, a_2, a_3, b_1, b_2, b_3 \in S, \forall r \in \mathbb{Z}, \mathit{AssessDiff}(a_1, a_2, a_3, b_1, b_2, b_3, r)$
+
+\textcircled{1} Assume that $r =0$
+
+Hence $0 = |a_1-b_1| + |a_2 - b_2| + |a_3 - b_3|$
+
+for $|a_n - b_n| = 0$, $a_n = b_n$ for $n$ in \{1,2,3\}
+
+\textcircled{2} Now, Assume instead $a_n = b_n$ for $n$ in \{1,2,3\}
+
+Then $r = |a_1-b_1| + |a_2 - b_2| + |a_3 - b_3|$
+
+$= 0 + 0+ 0$
+
+Hence $r=0$.
+
+
+
+
+\item[4c.]
+Suppose $S= \{0,1,2,3,4\}, \ \forall a_1, a_2, a_3, b_1, b_2, b_3 \in S, \forall r \in \mathbb{Z}, \mathit{AssessDiff}(a_1, a_2, a_3, b_1, b_2, b_3, r)$
+
+Then $r_n = |a_n-b_n|$:
+
+$=|(-1)(b_n-a_n)|$
+
+$=|(-1)||b_n-a_n|$
+
+$= 1|b_n-a_n|$
+
+$|b_n-a_n|$
+
+
+
+
+
+\item[4d.]
+Let $S' = \{0,1,2,3,4,5\}$
+
+WTS: \ $\exists a_1, a_2, a_3, b_1, b_2, b_3 \in S', \exists r \in \mathbb{Z}, \mathit{AssessDiff}(a_1, a_2, a_3, b_1, b_2, b_3, r)$ and $r>12$
+
+Take $a_i = 0 \ and\  b_i = 5 \ for \ i \in \{1,2,3\}$
+
+Hence r = 15
+\end{enumerate}
+
+\section*{Part 2: Loops and mutation debugging}
+
+\begin{enumerate}
+\item[1.]
+
+test\_routine\_report PASSED
+
+test\_monitor\_report FAILED
+
+test\_urgent\_report FAILED
+
+
+
+\item[2.]
+
+Error 1: The function clean\_text returns texts that are only split but not all lowercase. This is due to strings being immutable.
+
+Error 2: The function count\_severity\_words only checks if the given word is in the list
+occurrences\_so\_far and adds it to the list and given an occurrences of +1. But in the case where the given word is already in the list, it does not add 1 to the word occurrences in the list.
+
+\item[3.]
+test\_routine\_report passed as the severity words in the document occur only once and all are in lowercase letters.
+\end{enumerate}
+
+\end{document}

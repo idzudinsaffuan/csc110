@@ -1,0 +1,66 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+
+\title{CSC110 Fall 2026 Assignment 1: Written Questions}
+\author{Idzudin Saffuan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Part 1: Interpreting test results}
+
+% TIP: In LaTeX, the underscore (_) is a special character, so if you want to use it
+% in normal text, you have to put a backslash in front of it. E.g., a1\_part2.py,
+% not a1_part2.py.
+
+\begin{enumerate}
+\item[1.]
+test\_calculation\_one\_group\_one\_colour PASSED
+
+test\_calculation\_many\_groups\_same\_colours FAILED
+
+test\_calculation\_many\_groups\_different\_colours FAILED
+
+\item[2.]
+Error 1 : colours[0][2] instead of colour[2]
+
+- The error causes the function to read the g value for the first colour in the list.
+
+- Rather, the g value should be read from within each of the colour given to the function.
+
+Error 2 : return total / len(colours) instead of return total
+
+- The error causes the function to return the average of the brightness among the colours.
+
+- Rather, the function should return the total brightness of the colours.
+
+\item[3.]
+For a list with one colour, Error 1 still returns the correct value as reading from colours[0] refers to the same colour.
+
+Error 2 still returns the correct value as finding the average of brightness across a single colour is equal to the brightness of the colour itself.
+
+\end{enumerate}
+
+\section*{Part 4: Reasoning about Arguments}
+
+\begin{enumerate}
+\item[Claim 1.]
+Claim 1 and Paul's explanation is correct given that the original value of B is not 255.
+
+\item[Claim 2.]
+Both Claim 2 and Paul's reasoning is incorrect as the possible colour balance is from -255 to 255.
+
+In a collection of 512 valid RGB colours, it is not necessarry that two colours have the same colour balance.
+
+\item[Claim 3.]
+Claim 3 is correct but Paul's explanation is inaccurate.
+
+For cases where the colour balance is negative, the property that
+$ac > bc$ is incorrect for $a > b$.
+
+The correct explanation is that $a^2 > b^2$ for $a > b$ hence the greater the colour balance, the greater the colour imbalance.
+\end{enumerate}
+
+\end{document}

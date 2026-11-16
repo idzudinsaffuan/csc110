@@ -1,0 +1,11 @@
+# CSC110/111: Python libraries we'll be using this term.
+
+# Testing and code checking
+hypothesis
+pytest
+python-ta==2.12.1
+
+# Graphics and data visualization
+plotly
+pygame
+pillow
