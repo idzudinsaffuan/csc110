@@ -6,10 +6,10 @@
 \usepackage[margin=0.75in]{geometry}
 
 \title{CSC110 Fall 2026 Assignment 3: Number Theory and Cryptography}
-\author{TODO: FILL IN YOUR NAME HERE}
+\author{Idzudin Saffuan}
 \date{\today}
-
 \begin{document}
+
 \maketitle
 
 
@@ -22,7 +22,19 @@ $\forall a, b, k, m, n \in \mathbb{Z},~
 a + kn \equiv b + mn \pmod n$
 
 \begin{proof}
-TODO: Write your proof here.
+Let $a, b, k, m, n \in \mathbb{Z}$ be arbitrary. Suppose $n > 0 \wedge a \equiv b \ (mod\ n)$.
+
+Then $n |(a-b) \implies a - b = nk_1$ for some $k \in \mathbb{Z}$. Consider $a +kn$ and $b + mn$:
+\begin{align*}
+a+kn - (b +mn) \\
+= a-b + kn - mn \\
+= a-b +(k-m)n
+\end{align*}
+Notice that $a-b = nk_1$ and $k, m \in \mathbb{Z}$. Then:
+\begin{align*}
+n(k_1+k-m) \implies n|\big((a+kn)-(b+mn)\big)
+\end{align*}
+Hence $a + kn \equiv b + mn \ (mod\ n)$ as desired.
 \end{proof}
 
 \newpage
@@ -33,7 +45,23 @@ $\forall a, b, n \in \mathbb{Z},~
 \gcd(b, n) = 1$
 
 \begin{proof}
-TODO: Write your proof here.
+Let $a, b, n \in \mathbb{Z}$ be arbitrary. Suppose $n>0 \wedge gcd(a,n) =1$ and $ b \equiv a \ (mod \ n)$.
+
+By the \textit{GCD Linear Combination Theorem},
+\begin{align*}
+pa + qn = 1
+\end{align*}
+for some $p, q \in \mathbb{Z}$. Recall that $ b \equiv a \ (mod \ n)$ then by definition:
+\begin{align*}
+n|(b-a) \implies b-a = nk
+\end{align*}
+for some $k \in \mathbb{Z}$. We know $ a= b-nk$;
+\begin{align*}
+p(b-nk) + qn = 1 \\
+\implies pb - pnk + qn = 1 \\
+\implies pb + (q-pk)n = 1
+\end{align*}
+We take $x=p$, $y = q-pk$ such that $x,y \in \mathbb{Z}$. Hence, it is shown that there exists a linear combination $xb +yn =1$. Recall that $n > 0$ and $n,b \in \mathbb{Z}$ such that $gcd(b,n) \neq  0$. Since 1 is the smallest positive integer that could be written as a linear combination of $b$ and $n$, It follows that $gcd(b,n) = 1$
 \end{proof}
 
 \newpage
@@ -47,7 +75,30 @@ Prove that for all $x \in \mathbb{Z}$, if $\gcd(x, n) = 1$, then
 \]
 
 \begin{proof}
-TODO: Write your proof here.
+Suppose $gcd(x,n) =1$. Then by \textit{Euler's Theorem}:
+\begin{align*}
+x^{\phi(n)} \equiv 1 \ (mod \ n)
+\end{align*}
+Since $ed \equiv 1 \ \big(mod \ \phi(n)\big)$, by definition:
+\begin{align*}
+\phi(n)|(ed-1) \\
+\implies k\phi(n) = ed - 1 \\
+\implies k\phi(n) +1 = ed
+\end{align*}
+Consider:
+\begin{align*}
+x^{\phi(n)} \equiv 1 \ (mod \ n) \\
+=(x^{\phi(n)})^k \equiv 1^k \ (mod \ n) \\
+=x^{k\phi(n)} \equiv 1 \ (mod \ n) \\
+=x \cdot x^{k\phi(n)} \equiv x \cdot 1 \ (mod \ n) \\
+=x^{k\phi(n)+1} \equiv x\ (mod \ n) \\
+\end{align*}
+Recall that $k\phi(n) +1 = ed$:
+\begin{align*}
+x^{ed} \equiv x\ (mod \ n) \\
+= (x^{e})^d \equiv x\ (mod \ n) \\
+\end{align*}
+as desired.
 \end{proof}
 \end{enumerate}
 
@@ -76,33 +127,48 @@ Do \textbf{not} include your solutions in this file, \emph{except} for the follo
 \item[3b.]
 
 \begin{verbatim}
-# TODO: copy-and-paste your code for find_collision_len_times_sum here.
-# This will make it easier for both you and your TA to refer to your code in your
-# explanation below!
+
 
 def find_collision_len_times_sum(message: str) -> str:
+new_message_so_far = ''
+    first = chr(ord(message[0]) - 1)
+    new_message_so_far = new_message_so_far + first
+    for i in range(1, len(message) - 1):
+        new_message_so_far = new_message_so_far + message[i]
+    last = chr(ord(message[len(message) - 1]) + 1)
+    new_message_so_far = new_message_so_far + last
+    return new_message_so_far
 
 \end{verbatim}
 
 
-TODO: Explain (in English) your algorithm for \texttt{find\_collision\_len\_times\_sum} here.
-You may use the \texttt{verbatim} environment to include blocks of code in your explanation.
+The function calculates the sum of the \texttt{ord} values of the strings within \texttt{message}. Substracting $1$ from the \texttt{ord} value of the first character in \texttt{message} and adding $1$ in last will give the same sum as the original message. Hence the signature generated using the new message will be the same as the original message.
 
 \newpage
 
 \item[4b.]
 
 \begin{verbatim}
-# TODO: copy-and-paste your code for find_collision_ascii_to_int here.
-# This will make it easier for both you and your TA to refer to your code in your
-# explanation below!
+
 
 def find_collision_ascii_to_int(public_key: tuple[int, int], message: str) -> str:
-
+n = public_key[0]
+    int_128 = ascii_to_int(message) + n
+    num = a3_part2.int_to_base128(int_128)
+    str_so_far = ''
+    for i in num:
+        str_so_far = str_so_far + chr(i)
+    return str_so_far
 \end{verbatim}
 
-TODO: Explain (in English) your algorithm for \texttt{find\_collision\_ascii\_to\_int} here.
-You may use the \texttt{verbatim} environment to include blocks of code in your explanation.
-
+The message digest in this case is calculated by finding the integer value from the given \texttt{message}'s \texttt{ord} values in base-128. Recall that the signature is calculated by:
+\begin{align*}
+s = a^d  \ \% \ n
+\end{align*}
+where $a$ is the message digest modulo $n$, and a is calculated from the return value of \texttt{ascii\_to\_int} modulo $n$. From \textit{Part 1, Question 1}, We know that:
+\begin{align*}
+a + kn \equiv b + mn \ (mod\ n)
+\end{align*}
+The integer value added by $n$ is equivalent to the original integer value modulo $n$, from which the signature is generated from.
 \end{enumerate}
 \end{document}
