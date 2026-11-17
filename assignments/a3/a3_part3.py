@@ -118,10 +118,15 @@ def find_collision_simple(message: str) -> str:
     >>> rsa_verify_simple(example_public_key, new_message, example_signature)
     True
     """
-    new_message_so_far = ''
-    for i in range(len(message)):
-        new_message_so_far = new_message_so_far + message[len(message) - 1 - i]
-    return new_message_so_far
+    message_so_far = ''
+    first = message[0]
+    if first == 'a':
+        message_so_far += 'b'
+    else:
+        message_so_far += 'a'
+    for i in range(1, len(message)):
+        message_so_far += message[i]
+    return message_so_far
 
 
 ###############################################################################
