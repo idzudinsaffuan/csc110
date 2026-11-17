@@ -81,22 +81,22 @@ x^{\phi(n)} \equiv 1 \ (mod \ n)
 \end{align*}
 Since $ed \equiv 1 \ \big(mod \ \phi(n)\big)$, by definition:
 \begin{align*}
-\phi(n)|(ed-1) \\
-\implies k\phi(n) = ed - 1 \\
-\implies k\phi(n) +1 = ed
+\varphi(n)|(ed-1) \\
+\implies k\varphi(n) = ed - 1 \\
+\implies k\varphi(n) +1 = ed
 \end{align*}
 Consider:
 \begin{align*}
-x^{\phi(n)} \equiv 1 \ (mod \ n) \\
-=(x^{\phi(n)})^k \equiv 1^k \ (mod \ n) \\
-=x^{k\phi(n)} \equiv 1 \ (mod \ n) \\
-=x \cdot x^{k\phi(n)} \equiv x \cdot 1 \ (mod \ n) \\
-=x^{k\phi(n)+1} \equiv x\ (mod \ n) \\
+x^{\varphi(n)} \equiv 1 \ (mod \ n) \\
+\implies(x^{\varphi(n)})^k \equiv 1^k \ (mod \ n) \\
+\implies x^{k\varphi(n)} \equiv 1 \ (mod \ n) \\
+\implies x \cdot x^{k\varphi(n)} \equiv x \cdot 1 \ (mod \ n) \\
+\implies x^{k\varphi(n)+1} \equiv x\ (mod \ n) \\
 \end{align*}
-Recall that $k\phi(n) +1 = ed$:
+Recall that $k\varphi(n) +1 = ed$:
 \begin{align*}
 x^{ed} \equiv x\ (mod \ n) \\
-= (x^{e})^d \equiv x\ (mod \ n) \\
+\implies (x^{e})^d \equiv x\ (mod \ n) \\
 \end{align*}
 as desired.
 \end{proof}
@@ -169,6 +169,6 @@ where $a$ is the message digest modulo $n$, and a is calculated from the return 
 \begin{align*}
 a + kn \equiv b + mn \ (mod\ n)
 \end{align*}
-The integer value added by $n$ is equivalent to the original integer value modulo $n$, from which the signature is generated from.
+Applying the property, we can conclude that the integer value added by $n$ is equivalent to the original integer value modulo $n$, from which the signature is generated from.
 \end{enumerate}
 \end{document}
