@@ -33,10 +33,13 @@ def convex_hull(points: set[tuple[int, int]]) -> list[tuple[int, int]]:
     Preconditions:
         - len(points) >= 3
 
-    >>> example_points = ...
+    >>> example_points = {(200, 100), (250, 200), (150, 350), (425, 100), (500, 300), (500, 500), (700,30)}
     >>> convex_hull(example_points)
-    (Write the expected output here)
+    [(150, 350), (200, 100), (700, 30), (500, 500), (150, 350)]
+    >>> example_points = {(375, 125), (675, 450), (124,450)}
+    [(125, 450), (375, 125), (675, 450), (125, 450)]
     """
+
 
 
 @check_contracts
@@ -51,6 +54,13 @@ def leftmost(points: set[tuple[int, int]]) -> tuple[int, int]:
     Preconditions:
         - points != set()
     """
+    coord_so_far = (0, 0)
+    for i in points:
+        if i[0] >= coord_so_far[0]:
+            if i[1] > coord_so_far[1]:
+                coord_so_far = i
+    return coord_so_far
+
 
 
 @check_contracts
