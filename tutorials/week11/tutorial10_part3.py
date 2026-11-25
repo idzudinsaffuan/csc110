@@ -28,9 +28,11 @@ class ListMap:
 
     def __init__(self) -> None:
         """Initialize a new empty mapping."""
+        self._pairs = []
 
     def size(self) -> int:
         """Return the number of key-value pairs in this mapping."""
+        return len(self._pairs)
 
     def assign(self, key: Any, new_value: Any) -> None:
         """Assign the given key to the given value in this mapping.
@@ -38,6 +40,7 @@ class ListMap:
         The given value replaces any existing corresponding value if the key was
         already in this mapping.
         """
+        self._pairs.append((key, new_value))
 
     def lookup(self, key: Any) -> Any:
         """Look up the corresponding value for this key in this mapping.
@@ -51,6 +54,12 @@ class ListMap:
         >>> m.lookup('b')
         2
         """
+        for i in self._pairs:
+            if i[0] == key:
+                return i[1]
+            raise KeyError
+
+
 
     def pop(self, key: Any) -> Any:
         """Remove and return the corresponding value of the given key from this mapping.
@@ -66,6 +75,10 @@ class ListMap:
         >>> m.size()
         2
         """
+        for i in range(len(self._pairs)):
+            if self._pairs[i][0] == key:
+                self._pairs.pop(i)
+            raise KeyError
 
 
 if __name__ == '__main__':
